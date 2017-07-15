@@ -1,0 +1,58 @@
+.navbar{
+	background-color: #fff059;
+  border-bottom: 1px solid #d9d9d9;
+  position: fixed;
+  height: 54px;
+  width: 100%;
+  display: flex;
+  top: 0;
+  .nav-logo{
+		height: 40px;
+		width: 160px;
+   	margin: 7px 20px 7px 0;
+    overflow: hidden;
+    text-indent: -999px;
+    display: inline-block;
+  	background-repeat: no-repeat;
+  	background-image: url(https://http2.mlstatic.com/ui/navigation/2.0.8/mercadolibre/logo-pt__large.png);
+  }
+  .nav-search{
+    overflow: auto;
+    height: 40px;
+    margin: 7px 0;
+    position: relative;
+    display: flex;
+    flex: 2;
+    .nav-search-input{
+			padding: 5px 10px 5px 5px;
+			border: 1px solid #ccc;
+			background-color: #fff;
+			border-radius: 3px;
+	    font-size: 16px;
+	    height: 28px;
+	    width: 100%;
+	    color: #333;
+	    margin: 0;
+	    flex: 2;
+    }
+    .nav-search-btn{
+			color: #333;
+			width: 46px;
+			height: 40px;
+			cursor: pointer;
+			font-size: 17px;
+	    margin-left: -5px;
+			border: 1px solid #ccc;
+			border-radius: 0 3px 3px 0;
+			background-color: #fff;
+			background-image: linear-gradient(#fff,#f1f1f1);
+			svg{
+		    margin-top: -5px;
+		  }
+			span{
+				display: none;
+			}
+    }
+	}
+}
+
