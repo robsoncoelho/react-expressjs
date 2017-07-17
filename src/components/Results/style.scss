@@ -1,0 +1,124 @@
+@import 'variables.scss';
+
+#loading {
+	animation: spin 1s linear infinite;
+	font-size: 40px;
+	margin-left: -20px;
+	margin-top: -20px;
+	color: #aaa;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+}
+
+#results {
+	width: 100%;
+	ol {
+		animation: fadein 0.3s;
+		margin: $margin-page 0;
+		padding: 0;
+		width: 100%;
+		border-radius: $border-radius;
+		background-color: #fff;
+		list-style: none;
+		li {
+			width: 100%;
+			display: flex;
+			position: relative;
+			.image {
+				margin: 20px;
+				position: relative;
+				img {
+					width: 160px;
+					height: 160px;
+				}
+			}
+			.info {
+				flex: 2;
+				display: flex;
+				margin: 20px 20px 20px 0;
+				.product-info {
+					flex: 3;
+					.price {
+						color: #333;
+						font-size: 24px;
+					}
+					.name {
+						margin-top: 10px;
+						font-weight: 300;
+						font-size: 20px;
+						a{
+							text-decoration: none;
+							color: $text-color;
+						}
+					}
+				}
+				.seller-info {
+					flex: 1;
+					p {
+						font-size: 14px;
+					}
+				}
+			}
+			&:after {
+				content: "";
+				bottom: 0;
+				left: 24px;
+				height: 1px;
+				width: 94.5%;
+				position: absolute;
+				border-bottom: 1px solid #eee;
+			}
+			&:last-child {
+				&:after {
+					display: none;
+				}
+			}
+		}
+	}
+	#no-results{
+		width: 100%;
+		text-align: center;
+		margin: $margin-page 0;
+	}
+}
+
+@keyframes spin {
+	100% { transform:rotate(360deg) }
+}
+
+
+@media (max-width: $medium-screen) {
+  #results {
+  	ol {
+  		li {
+  			.info {
+  		    flex-wrap: wrap;
+  				.product-info,
+  				.seller-info {
+  					flex: none;
+  					width: 100%;
+  				}
+  			}
+  		}
+  	}
+  }
+}
+
+@media (max-width: $small-screen) {
+  #results {
+  	ol {
+  		li {
+  			flex-wrap: wrap;
+  			.image {
+					width: 100%;
+					text-align: center;
+  			}
+  			.info {
+  				width: 100%;
+  		    margin: 0 20px 20px 20px;
+  			}
+  		}
+  	}
+  }
+}

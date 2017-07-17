@@ -1,0 +1,100 @@
+@import 'variables.scss';
+
+#details {
+	width: 100%;
+	margin: $margin-page 0;
+	#item {
+		border-radius: $border-radius;
+		background-color: #fff;
+		padding: 20px;
+		display: flex;
+	    justify-content: space-between;
+		animation: fadein 0.3s;
+		#info {
+			width: 70%;
+			padding-right: 20px;
+			div {
+				h2 {
+					margin: 60px 0 20px;
+					font-size: 22px;
+				}
+				p {
+					color: #999;
+					font-size: 14px;
+				}
+				img,
+				table {
+					max-width: 100%;
+					height: auto;
+				}
+				table {
+					width: 100%;
+				}
+			}
+		}
+		#price {
+			width: 30%;
+			p {
+			    font-size: 12px;
+			}
+			h1 {
+				font-size: 22px;
+				margin: 10px 0px;
+				word-wrap: break-word;
+			}
+			h3 {
+			    font-size: 40px;
+			    line-height: 40px;
+			    word-wrap: break-word;
+			    sup {
+			    	font-size: 20px;
+			    	line-height: 26px;
+			    }
+			}
+			button {
+				cursor: pointer;
+				width: 100%;
+				border: none;
+				border-radius: 4px;
+				height: 40px;
+				color: #fff;
+				font-size: 18px;
+				margin-top: 40px;
+				background: #323e8f;
+				&:hover {
+					opacity: 0.8;
+				}
+			}
+		}
+	}
+	#no-results{
+		text-align: center;
+	}
+}
+
+@media (max-width: $medium-screen) {
+  #details{
+  	#item {
+  		flex-wrap: wrap;
+  		#info,
+  		#price {
+  			width: 100%;
+  		}
+  		#info {
+  			padding-right: 0;
+  		}
+  		#price {
+  			margin-top: 30px;
+  			h1 {
+  				font-size: 18px;
+  			}
+  			h3 {
+  				font-size: 30px;
+  				sup {
+  					font-size: 14px;
+  				}
+  			}
+  		}
+  	}
+  }
+}

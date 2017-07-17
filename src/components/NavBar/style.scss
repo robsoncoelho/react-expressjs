@@ -1,11 +1,17 @@
-.navbar{
+@import './variables.scss';
+
+#navbar{
 	background-color: #fff059;
   border-bottom: 1px solid #d9d9d9;
   position: fixed;
-  height: 54px;
+  height: $navbar-height;
   width: 100%;
   display: flex;
+  z-index: 9;
   top: 0;
+  div {
+  	width: 100%;
+  }
   .nav-logo{
 		height: 40px;
 		width: 160px;
@@ -54,5 +60,13 @@
 			}
     }
 	}
+}
+
+@media (max-width: $medium-screen) {
+  #navbar{
+  	.nav-logo {
+  		width: 60px;
+  	}
+  }
 }
 

@@ -13,22 +13,32 @@ router.get('/items', function(req, res, next) {
   request('https://api.mercadolibre.com/sites/MLA/search?q=' + req.query.q, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       const list = JSON.parse(body);
-      resultList = resultSearchAPI(list, total_results);
 
-      resultList.items.forEach(function(obj, index) {
-        request('https://api.mercadolibre.com/users/' + obj.author, function (error, response, body) {
-          if (!error && response.statusCode == 200) {
-            const user = JSON.parse(body);
-            obj.author = {
-              nickname: user.nickname
+      if ( list.results.length > 0 ) {
+        resultList = resultSearchAPI(list, total_results);
+        resultList.items.forEach(function(obj, index) {
+          request('https://api.mercadolibre.com/users/' + obj.author, function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+              const user = JSON.parse(body);
+              obj.author = {
+                nickname: user.nickname
+              }
             }
-          }
-          total_callback++;
-          if( total_callback == total_results ) {
-            res.json(resultList);
-          }
+            total_callback++;
+            if( total_callback == total_results ) {
+              res.json(resultList);
+            }
+          })
         })
-      })
+      } else {
+        res.json(
+          result = {}
+        )
+      }
+    } else {
+      res.json(
+        result = {}
+      )
     }
   })
 
@@ -56,7 +66,8 @@ router.get('/items', function(req, res, next) {
         title: obj.title,
         price: {
           currency: obj.currency_id,
-          amount: obj.price
+          amount: Math.round(obj.price),
+          decimals: parseInt((obj.price % 1).toFixed(2).split('.')[1])
         },
         picture: obj.thumbnail,
         condition: obj.condition,
@@ -71,40 +82,55 @@ router.get('/items', function(req, res, next) {
   }
 })
 
+
+
 router.get('/items/:id', function(req, res, next) {
-
   let total_callback = 0;
-
   request('https://api.mercadolibre.com/items/' + req.params.id, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       let list = [];
       list.push(JSON.parse(body));
-      resultList = resultItemAPI(list);
 
-      request('https://api.mercadolibre.com/users/' + resultList.author, function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-          const user = JSON.parse(body);
-          resultList.author = {
-            nickname: user.nickname
+      if ( list.length > 0 ) {
+
+        resultList = resultItemAPI(list);
+
+        request('https://api.mercadolibre.com/users/' + resultList.author, function (error, response, body) {
+          if (!error && response.statusCode == 200) {
+            const user = JSON.parse(body);
+            resultList.author = {
+              nickname: user.nickname
+            }
           }
-        }
-        requestCallback(resultList)
-      })
+          requestCallback(resultList)
+        })
 
-      request('https://api.mercadolibre.com/items/' + req.params.id + '/description', function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-          const list = JSON.parse(body);
-          resultList.description = list.text;
-        }
-        requestCallback(resultList)
-      })
+        request('https://api.mercadolibre.com/items/' + req.params.id + '/description', function (error, response, body) {
+          if (!error && response.statusCode == 200) {
+            const list = JSON.parse(body);
+            resultList.description = {
+              text: list.text,
+              plain_text: list.plain_text
+            };
+          }
+          requestCallback(resultList)
+        })
+      } else {
+        res.json(
+          result = {}
+        )
+      }
+    } else {
+      res.json(
+        result = {}
+      )
     }
   })
 
   function requestCallback(resultList) {
     total_callback++;
     if (total_callback == 2) {
-      console.log(resultList)
+      res.json(resultList);
     }
   }
 
@@ -117,10 +143,11 @@ router.get('/items/:id', function(req, res, next) {
           title: obj.title,
           price: {
             currency: obj.currency_id,
-            amount: obj.price
+            amount: Math.floor(obj.price),
+            decimals: parseInt((obj.price % 1).toFixed(2).split('.')[1])
           }
         },
-        picture: obj.thumbnail,
+        picture: obj.pictures[0].url,
         condition: obj.condition,
         free_shipping: obj.shipping.free_shipping,
         sold_quantity: obj.sold_quantity

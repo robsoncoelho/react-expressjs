@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import FaSearch from 'react-icons/lib/fa/search';
+
 import './style.css';
 
 class NavBar extends Component {
@@ -16,18 +17,18 @@ class NavBar extends Component {
   }
 
   handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.value);
     event.preventDefault();
+    window.location = '/items?search=' + this.state.value;
   }
 
   render() {
     return (
-      <header className="navbar">
+      <header id="navbar">
         <div className="container">
-          <a className="nav-logo" href="//www.mercadolivre.com.br/">
+          <a className="nav-logo" href="/">
             Mercado Livre Brasil - Onde comprar e vender de Tudo
           </a>
-          <form className="nav-search" action="//www.mercadolivre.com.br/jm/search" method="GET" role="search">
+          <form className="nav-search" onSubmit={this.handleSubmit} role="search">
             <input
               type="text"
               className="nav-search-input"

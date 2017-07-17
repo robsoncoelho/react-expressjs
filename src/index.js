@@ -13,14 +13,18 @@ const App = () => (
   <Router>
     <div>
     	<NavBar />
-      <Route exact path="/" component={Search}/>
-      <Route exact path="/items" component={Results}/>
-      <Route path="/items/:id" component={Details}/>
+      <div id="main">
+        <div className="container">
+          <Route exact path="/" component={Search}/>
+          <Route exact path="/items" component={Results}/>
+          <Route path="/items/:id" component={Details}/>
+        </div>
+      </div>
     </div>
   </Router>
 )
 
 ReactDOM.render(
-	<App />,
+	 <App />,
 	document.getElementById('root')
 );
